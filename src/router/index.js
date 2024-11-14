@@ -30,14 +30,14 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from, next) => {
-//     // 如果路径是根路径，重定向到 /login
-//     if (to.path === '/') {
-//         next('/login')
-//     } else {
-//         // 否则正常放行
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+  // 如果路径是根路径，重定向到 /login
+  if (to.path === "/") {
+    next("/login");
+  } else {
+    // 否则正常放行
+    next();
+  }
+});
 
 export default router;

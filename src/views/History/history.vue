@@ -11,7 +11,9 @@
 </template>
 <script setup>
 import HistoryCard from "@/components/HistoryCard.vue";
+import { onMounted } from "vue";
 import router from "@/router";
 const onClickLeft = () => router.push("/home");
+onMounted(() => {});
 </script>
 <style scoped lang="less"></style>

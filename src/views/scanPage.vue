@@ -9,6 +9,16 @@
       @click-left="clickIndexLeft()"
     ></van-nav-bar>
     <!-- 扫码区域 -->
+    <canvas
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2000;
+        background: 0; /* 确保背景透明 */
+      "
+      ref="canvasRef"
+    ></canvas>
     <video ref="video" id="video" class="scan-video" autoplay></video>
     <div
       style="
@@ -21,6 +31,7 @@
         top: 50%;
         transform: translate(-50%, -70%);
       "
+      ref="scanBox"
     ></div>
   </div>
 </template>
@@ -37,10 +48,21 @@ export default {
       tipShow: false, // 是否展示提示
       tipMsg: "", // 提示文本内容
       scanText: "", // 扫码结果文本内容
+      scanBox: null,
+      canvas: null,
+      elData: {
+        left: Infinity, //无穷大
+        top: Infinity,
+        right: -Infinity, //无穷校小
+        bottom: -Infinity,
+        width: -Infinity,
+        height: -Infinity,
+      },
     };
   },
   created() {
     this.openScan();
+    this.initCanvas();
   },
   watch: {
     $route(to, from) {
@@ -51,6 +73,51 @@ export default {
     },
   },
   methods: {
+    initCanvas() {
+      // 确保 canvasRef 已经渲染
+      this.$nextTick(() => {
+        this.canvas = this.$refs.canvasRef;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+
+        // 确保 scanBox 已经渲染并且可以计算出位置
+        this.elData = {
+          left: this.$refs.scanBox.getBoundingClientRect().left,
+          top: this.$refs.scanBox.getBoundingClientRect().top,
+          right: this.$refs.scanBox.getBoundingClientRect().right,
+          bottom: this.$refs.scanBox.getBoundingClientRect().bottom,
+          width: this.$refs.scanBox.getBoundingClientRect().width,
+          height: this.$refs.scanBox.getBoundingClientRect().height,
+        };
+
+        const context = this.canvas.getContext("2d");
+        context.fillStyle = "rgba(0, 0, 0, 0.8)";
+        context.filter = "grayscale(100%)"; // 完全灰度
+        context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        context.strokeStyle = "white"; // 设置边框颜色为白色
+        context.lineWidth = 2; // 设置边框宽度
+
+        // 设置虚线样式
+        context.setLineDash([7, 4]);
+
+        // 绘制虚线白色边框
+        context.strokeRect(
+          this.elData.left - 15 - context.lineWidth / 2,
+          this.elData.top - 15 - context.lineWidth / 2,
+          this.elData.width + 30 + context.lineWidth,
+          this.elData.height + 30 + context.lineWidth
+        );
+
+        // 设置合成方式为 destination-out，绘制选中区域为透明
+        context.globalCompositeOperation = "destination-out";
+        context.fillRect(
+          this.elData.left - 15,
+          this.elData.top - 15,
+          this.elData.width + 30,
+          this.elData.height + 30
+        );
+      });
+    },
     async openScan() {
       // 初始化摄像头
       this.codeReader = await new BrowserMultiFormatReader();

@@ -20,7 +20,7 @@
 
         <h2 style="text-align: center">登录</h2>
       </template>
-      <el-form label-width="auto" style="width: 100%" :rules="rules">
+      <el-form label-width="auto" style="width: 100%">
         <el-form-item
           :label="item.label"
           v-for="(item, index) in state"
@@ -63,7 +63,7 @@
         </el-space>
       </div>
       <div style="width: 100%; text-align: center; margin-top: 40px">
-        <el-button type="primary" size="large">登录</el-button>
+        <el-button type="primary" size="large" @click="gologin">登录</el-button>
       </div>
     </el-card>
   </div>
@@ -72,6 +72,7 @@
 import router from "@/router";
 import { reactive } from "vue";
 import { inputType } from "@/config";
+import { login } from "@/apis/api";
 const state = reactive<inputType[]>([
   {
     name: "account",
@@ -88,11 +89,27 @@ const state = reactive<inputType[]>([
     val: "",
   },
 ]);
-const rules = {
-  item_account: [{ required: true, message: "学号不能为空", trigger: "blur" }],
-  item_password: [{ required: true, message: "密码不能为空", trigger: "blur" }],
+
+const gologin = async () => {
+  if (state[0].val && state[1].val) {
+    let data = {
+      account: state[0].val,
+      password: state[1].val,
+    };
+    const res = await login(data);
+    if (res.code == "0") {
+      ElMessage.success("登录成功");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("id", res.data.userId);
+      localStorage.setItem("pre", res.data.right);
+      router.push("/home");
+    } else {
+      ElMessage.error(res.data);
+    }
+  } else {
+    ElMessage.error("账号或密码不能为空");
+  }
 };
-const login = () => {};
 </script>
 <style scoped lang="less">
 .box {

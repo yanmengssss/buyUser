@@ -1,14 +1,13 @@
-import { request } from "./utils";
+import { request } from "@/utils/util.js";
 export const register = (data) => {
   return request({
-    url: "/regin",
-    data: data,
-    method: "POST",
+    url: "/user/registry",
+    params: data,
   });
 };
 export const login = (params) => {
   return request({
-    url: "/login",
+    url: "/user/login",
     params,
   });
 };
@@ -17,5 +16,25 @@ export const rebackPassword = (data) => {
     url: "/changePassword",
     data: data,
     method: "POST",
+  });
+};
+
+export const getBookList = (params) => {
+  return request({
+    url: "/book/getAllBook",
+    params,
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+
+export const borrowHistiry = (params) => {
+  return request({
+    url: "/book/getHistory",
+    params,
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
   });
 };
