@@ -17,13 +17,13 @@ export const updataBook = (data) => {
 };
 
 export const getBookList = (pageSize, pageIndex) => {
+  let temp = {
+    pageNum: pageIndex,
+    pageSize,
+  };
   return request({
     url: "/book/getAllBook",
-    method: "get",
-    params: {
-      pageNum: pageIndex,
-      pageSize,
-    },
+    params: temp,
     headers: {
       Authorization: localStorage.getItem("token"),
     },
@@ -47,7 +47,7 @@ export const getUserList = (pageSize, pageIndex) => {
 };
 export const borrowHistory = (pageSize, pageIndex) => {
   return request({
-    url: "/book/getHistory",
+    url: "/book/getRent",
     method: "get",
     params: {
       pageNum: pageIndex,
