@@ -59,12 +59,12 @@
               @click="() => router.push('/login')"
               >登录</el-text
             >
-            <el-text
+            <!-- <el-text
               class="mx-1"
               type="primary"
               @click="() => router.push('/findWord')"
               >忘记密码</el-text
-            >
+            > -->
           </el-space>
         </el-space>
       </div>
@@ -88,7 +88,7 @@ const timeStore = useTimerStore();
 const time = ref<number | "发送">("发送");
 
 const state = reactive([
-  { name: "account", label: "学号", ph: "请输入账号", type: "text", val: "" },
+  { name: "account", label: "账号", ph: "请输入账号", type: "text", val: "" },
   { name: "nickname", label: "昵称", ph: "请输入昵称", type: "text", val: "" },
   {
     name: "password",
@@ -135,7 +135,7 @@ const toRegister = async () => {
     ElMessage.success("注册成功");
     router.push("/login");
   } else {
-    ElMessage.error("注册失败");
+    ElMessage.error(res.mssage);
   }
 };
 

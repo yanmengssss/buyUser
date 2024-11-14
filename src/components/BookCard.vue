@@ -28,6 +28,7 @@
           </el-descriptions-item>
         </el-descriptions>
         <el-button
+          @click="emit('onBorrow', { id: props.id, title: props.title })"
           type="primary"
           size="small"
           style="margin-top: 10px; float: right; margin-right: 10px"
@@ -51,6 +52,7 @@ const props = defineProps<{
   hot: number;
   id: string;
 }>();
+const emit = defineEmits(["onBorrow"]);
 const activeName = ref("0"); // 设置初始值
 </script>
 

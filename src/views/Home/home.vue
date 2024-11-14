@@ -29,11 +29,14 @@
       :time="item.time"
       :id="item.id"
       :type="item.type"
+      @onBorrow="toborrow"
     ></BookCard>
   </div>
   <Dialogs :show="show" :title="title" :confirm="onconfirm" :cancel="onclose">
     <template #default>
-      <p style="margin-left: 20px">是否借阅</p>
+      <div style="width: 100%; text-align: center">
+        是否确定借阅{{ borrowName }}？<br />若借阅请于31日内归还
+      </div>
     </template>
   </Dialogs>
 </template>
@@ -42,12 +45,18 @@ import router from "@/router";
 import { onMounted, watch, ref } from "vue";
 import { usebookstore } from "@/stores";
 import BookCard from "@/components/BookCard.vue";
-import { getBookList } from "@/apis/api";
+import { getBookList, borrowBook } from "@/apis/api";
 import Dialogs from "@/components/Dialogs.vue";
 import { booktype } from "@/stores/common";
 import dayjs from "dayjs";
 const bookstore = usebookstore();
-const toborrow = () => {};
+const borrowId = ref("");
+const borrowName = ref("");
+const toborrow = (val) => {
+  show.value = true;
+  borrowId.value = val.id;
+  borrowName.value = val.title;
+};
 onMounted(() => {
   getBook(currentPage.value);
 });
@@ -90,10 +99,33 @@ const search = () => {
     bookList.value = temp;
   }
 };
+
+const emit = defineEmits(["onSearch"]);
+const show = ref<boolean>(false);
+const title = ref<string>("是否借阅");
+
+const onconfirm = async () => {
+  const res = await borrowBook({ bookId: borrowId.value });
+  if (res.code == "0") {
+    getBook(currentPage.value);
+    ElMessage.success("借阅成功");
+    show.value = false;
+  } else {
+    ElMessage.error(res.data);
+  }
+};
+const onclose = () => {
+  show.value = false;
+};
+const value = ref("");
 watch(
   () => bookstore.getbookIBSN,
+
   (newVal) => {
     if (newVal !== "") {
+      value.value = newVal;
+      search();
+      // console.log("搜索");
       bookstore.setbookIBSN("");
     }
   },
@@ -101,19 +133,6 @@ watch(
     immediate: true,
   }
 );
-const emit = defineEmits(["onSearch"]);
-const show = ref<boolean>(false);
-const title = ref<string>("是否借阅");
-const onSearch = () => {
-  show.value = true;
-};
-const onconfirm = () => {
-  show.value = false;
-};
-const onclose = () => {
-  show.value = false;
-};
-const value = ref("");
 </script>
 <style scoped>
 .cardList {

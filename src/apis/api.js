@@ -11,14 +11,6 @@ export const login = (params) => {
     params,
   });
 };
-export const rebackPassword = (data) => {
-  return request({
-    url: "/changePassword",
-    data: data,
-    method: "POST",
-  });
-};
-
 export const getBookList = (params) => {
   return request({
     url: "/book/getAllBook",
@@ -28,11 +20,45 @@ export const getBookList = (params) => {
     },
   });
 };
-
 export const borrowHistiry = (params) => {
   return request({
     url: "/book/getHistory",
     params,
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+export const borrowBook = (data) => {
+  return request({
+    url: "/book/rentBook",
+    params: data,
+    method: "get",
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+export const returnBook = (data) => {
+  return request({
+    url: "/book/backBook",
+    params: data,
+    method: "get",
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+};
+export const getBookDetail = (ISBN) => {
+  return request({
+    url: `https://62abcd6c.r8.vip.cpolar.cn/getMes/${ISBN}`,
+  });
+};
+export const addBook = (data) => {
+  return request({
+    url: "/book/InsertBook",
+    data: data,
+    method: "POST",
     headers: {
       Authorization: localStorage.getItem("token"),
     },

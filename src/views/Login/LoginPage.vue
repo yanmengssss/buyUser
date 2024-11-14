@@ -53,12 +53,12 @@
               @click="() => router.push('/register')"
               >注册</el-text
             >
-            <el-text
+            <!-- <el-text
               class="mx-1"
               type="primary"
               @click="() => router.push('/findWord')"
               >忘记密码</el-text
-            >
+            > -->
           </el-space>
         </el-space>
       </div>

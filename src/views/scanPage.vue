@@ -213,6 +213,7 @@ export default {
 
 <style lang="scss">
 .scan-index-bar {
+  z-index: 1000000;
   background-image: linear-gradient(-45deg, #42a5ff, #59cfff);
   .van-nav-bar__title,
   .van-nav-bar__arrow,

@@ -33,35 +33,156 @@
       @click="toScan('add')"
       >书籍录入</el-card
     >
+    <el-card style="max-width: 95%; margin: 0.3125rem auto" @click="logOut"
+      >退出登录</el-card
+    >
   </div>
+  <Dialogs :show="show" :title="'详情'" :confirm="onconfirm" :cancel="onclose">
+    <template #default>
+      <div style="width: 100%; text-align: center">
+        <el-input
+          v-for="item in inputList"
+          :key="item.type"
+          v-model="inputState[item.type]"
+          style="width: 240px; margin-top: 5px"
+          :placeholder="item.lable"
+        />
+        <el-select
+          v-model="inputState.type"
+          placeholder="请选择类型"
+          size="large"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="item in booktype"
+            :key="item.key"
+            :label="item.label"
+            :value="item.key"
+          />
+        </el-select>
+      </div>
+    </template>
+  </Dialogs>
 </template>
 <script setup lang="ts">
 import router from "@/router";
-import { watch, ref } from "vue";
+import { watch, ref, reactive } from "vue";
 import { usebookstore } from "@/stores";
+import { getBookDetail, addBook } from "@/apis/api";
+import { usecommonStore } from "@/stores/modules/common";
+import Dialogs from "@/components/Dialogs.vue";
 const bookstore = usebookstore();
 const type = ref<"" | "back" | "add">("");
+const commonStore = usecommonStore();
+const show = ref(false);
+const onclose = () => {
+  show.value = false;
+};
+
+const booktype = [
+  { label: "文学与艺术", key: 0 },
+  { label: "历史与地理", key: 1 },
+  { label: "社会科学", key: 2 },
+  { label: "自然科学", key: 3 },
+  { label: "技术与工程", key: 4 },
+  { label: "生活与健康", key: 5 },
+  { label: "管理与商业", key: 6 },
+];
+const onconfirm = () => {
+  addBook(inputState).then((res) => {
+    if (res.code == "0") {
+      ElMessage.success("录入" + inputState.bookName + "成功");
+      show.value = false;
+    } else {
+      ElMessage.success("录入" + inputState.bookName + "失败");
+    }
+  });
+};
+const inputList = [
+  {
+    lable: "请输入书名",
+    type: "bookName",
+  },
+  {
+    lable: "请输入出版社",
+    type: "publish",
+  },
+  {
+    lable: "请输入ISBN",
+    type: "isbn",
+  },
+  {
+    lable: "请输入作者",
+    type: "author",
+  },
+  {
+    lable: "请输入简介",
+    type: "introduce",
+  },
+  {
+    lable: "请输入位置",
+    type: "location",
+  },
+  {
+    lable: "请输入权重",
+    type: "hot",
+  },
+];
+let inputState = reactive({
+  bookName: "",
+  publish: "",
+  type: 0,
+  location: "",
+  introduce: "",
+  isbn: "",
+  author: "",
+  hot: 0,
+});
+// onMounted(() => {
+//   getBookDetail("9787302475170");
+// });
+const logOut = () => {
+  localStorage.clear();
+  router.push("/login");
+};
+const toScan = (t: "back" | "add") => {
+  commonStore.setType(t);
+  router.push("/scanPage");
+};
+const changeVal = (val, e) => {
+  inputState[val] = e;
+  console.log(inputState);
+};
 watch(
-  () => bookstore.getbookIBSN,
-  (newVal) => {
-    if (newVal !== "") {
-      if (type.value === "back") {
-        console.log("我要还书");
-      } else if (type.value === "add") {
-        console.log("书籍录入");
+  [() => bookstore.getbookIBSN],
+  ([newVal]) => {
+    if (newVal != "") {
+      if (commonStore.getType() == "back") {
+        ElMessage.success("还书" + newVal);
+      } else if (commonStore.getType() == "add") {
+        getBookDetail(newVal).then((res) => {
+          if (res.code == 100) {
+            ElMessage.error("查无此书");
+          } else {
+            inputState.bookName = res.detail.name;
+            inputState.publish = res.detail.publisher;
+            inputState.author = res.detail.author;
+            inputState.isbn = res.detail.ISBN;
+            inputState.introduce = res.detail.introduce;
+
+            show.value = true;
+          }
+        });
+        // 在这里可以处理getBookDetail的返回值res
       }
-      bookstore.setbookIBSN("");
-      type.value = "";
+      // 重置状态
+      bookstore.setbookIBSN(""); // 清空bookstore中的bookIBSN
     }
   },
   {
     immediate: true,
   }
 );
-const toScan = (t: "back" | "add") => {
-  type.value = t;
-  router.push("/scanPage");
-};
 </script>
 <style scoped lang="less">
 .mes {
