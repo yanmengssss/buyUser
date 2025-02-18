@@ -12,7 +12,7 @@
         <div class="head">
           <div style="display: flex; align-items: center">
             <img src="@/assets/logo.png" alt="" />
-            <h3>东莞理工学院 <br />图书使用中心</h3>
+            <h3>便利店商品 <br />使用中心</h3>
           </div>
         </div>
         <h2 style="text-align: center">请注册</h2>

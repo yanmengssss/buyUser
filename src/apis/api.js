@@ -51,7 +51,7 @@ export const returnBook = (data) => {
 };
 export const getBookDetail = (ISBN) => {
   return request({
-    url: `https://62abcd6c.r8.vip.cpolar.cn/getMes/${ISBN}`,
+    url: `http://e7f60b4.r20.cpolar.top`,
   });
 };
 export const addBook = (data) => {

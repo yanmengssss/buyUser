@@ -21,17 +21,17 @@
     <el-card
       style="max-width: 95%; margin: 0.3125rem auto"
       @click="router.push('/history')"
-      >借阅历史</el-card
+      >购买历史</el-card
     >
     <el-card
       style="max-width: 95%; margin: 0.3125rem auto"
       @click="toScan('back')"
-      >我要还书</el-card
+      >购买商品</el-card
     >
     <el-card
       style="max-width: 95%; margin: 0.3125rem auto"
       @click="toScan('add')"
-      >书籍录入</el-card
+      >商品录入</el-card
     >
     <el-card style="max-width: 95%; margin: 0.3125rem auto" @click="logOut"
       >退出登录</el-card
@@ -66,7 +66,7 @@
 </template>
 <script setup lang="ts">
 import router from "@/router";
-import { watch, ref, reactive } from "vue";
+import { watch, ref, reactive, onMounted } from "vue";
 import { usebookstore } from "@/stores";
 import { getBookDetail, addBook } from "@/apis/api";
 import { usecommonStore } from "@/stores/modules/common";
@@ -80,13 +80,13 @@ const onclose = () => {
 };
 
 const booktype = [
-  { label: "文学与艺术", key: 0 },
-  { label: "历史与地理", key: 1 },
-  { label: "社会科学", key: 2 },
-  { label: "自然科学", key: 3 },
-  { label: "技术与工程", key: 4 },
-  { label: "生活与健康", key: 5 },
-  { label: "管理与商业", key: 6 },
+  { label: "零食饮料", key: 0 },
+  { label: "冷藏食品", key: 1 },
+  { label: "速食热餐", key: 2 },
+  { label: "日用品", key: 3 },
+  { label: "烟酒类", key: 4 },
+  { label: "报刊杂志", key: 5 },
+  { label: "宠物食品", key: 6 },
 ];
 const onconfirm = () => {
   addBook(inputState).then((res) => {
@@ -100,19 +100,19 @@ const onconfirm = () => {
 };
 const inputList = [
   {
-    lable: "请输入书名",
+    lable: "请输入名称",
     type: "bookName",
   },
   {
-    lable: "请输入出版社",
+    lable: "请输入品牌",
     type: "publish",
   },
   {
-    lable: "请输入ISBN",
+    lable: "请输入商品码",
     type: "isbn",
   },
   {
-    lable: "请输入作者",
+    lable: "请输入出版商",
     type: "author",
   },
   {
@@ -138,9 +138,9 @@ let inputState = reactive({
   author: "",
   hot: 0,
 });
-// onMounted(() => {
-//   getBookDetail("9787302475170");
-// });
+onMounted(() => {
+  getBookDetail("9787302475170");
+});
 const logOut = () => {
   localStorage.clear();
   router.push("/login");
@@ -158,7 +158,7 @@ watch(
   ([newVal]) => {
     if (newVal != "") {
       if (commonStore.getType() == "back") {
-        ElMessage.success("还书" + newVal);
+        ElMessage.success("购买" + newVal);
       } else if (commonStore.getType() == "add") {
         getBookDetail(newVal).then((res) => {
           if (res.code == 100) {

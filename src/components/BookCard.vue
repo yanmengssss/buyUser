@@ -7,16 +7,16 @@
           <van-icon name="fire-o" color="#ee0a24" v-if="props.hot > 10" />
         </template>
         <el-descriptions direction="vertical" :column="1" size="small" border>
-          <el-descriptions-item label="书名">{{
+          <el-descriptions-item label="商品名称">{{
             props.title
           }}</el-descriptions-item>
-          <el-descriptions-item label="出版社">{{
+          <el-descriptions-item label="品牌">{{
             props.publish
           }}</el-descriptions-item>
-          <el-descriptions-item label="作者">{{
+          <el-descriptions-item label="出版商">{{
             props.author
           }}</el-descriptions-item>
-          <el-descriptions-item label="IBSN">{{
+          <el-descriptions-item label="商品码">{{
             props.ISBN
           }}</el-descriptions-item>
           <el-descriptions-item label="类型">{{
@@ -32,7 +32,7 @@
           type="primary"
           size="small"
           style="margin-top: 10px; float: right; margin-right: 10px"
-          >借阅</el-button
+          >购买</el-button
         >
       </el-collapse-item>
     </el-collapse>

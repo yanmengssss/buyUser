@@ -1,5 +1,5 @@
 <template>
-  <van-nav-bar title="借阅大厅" style="background-color: rgba(0, 0, 0, 0.1)" />
+  <van-nav-bar title="购买大厅" style="background-color: rgba(0, 0, 0, 0.1)" />
   <!-- <el-button @click="() => router.push('/scanPage')">扫码</el-button> -->
   <van-search
     v-model="value"
@@ -8,7 +8,7 @@
     background="#00000019"
     @click-left-icon="() => router.push('/scanPage')"
     @clear="() => (value = '')"
-    placeholder="标题或ISBN"
+    placeholder="标题"
     @search="search"
   >
     <template #action>
@@ -35,7 +35,7 @@
   <Dialogs :show="show" :title="title" :confirm="onconfirm" :cancel="onclose">
     <template #default>
       <div style="width: 100%; text-align: center">
-        是否确定借阅{{ borrowName }}？<br />若借阅请于31日内归还
+        是否确定购买{{ borrowName }}？<br />
       </div>
     </template>
   </Dialogs>
@@ -60,7 +60,7 @@ const toborrow = (val) => {
 onMounted(() => {
   getBook(currentPage.value);
 });
-const size = 10;
+const size = 100;
 const currentPage = ref(1);
 const total = ref(0);
 const bookList = ref([]);
@@ -73,8 +73,8 @@ const getBook = async (pageNum: number) => {
     if (item.status == 0) {
       bookList.value.push({
         id: item.bookId,
-        title: item.bookName || "暂无书名",
-        author: item.author || "暂无作者",
+        title: item.bookName || "暂无名称",
+        author: item.author || "暂无出版商",
         ISBN: item.isbn,
         type: booktype[item.type]?.label || "暂不清楚",
         introduce: item.introduction || "暂无介绍",
@@ -102,13 +102,13 @@ const search = () => {
 
 const emit = defineEmits(["onSearch"]);
 const show = ref<boolean>(false);
-const title = ref<string>("是否借阅");
+const title = ref<string>("是否购买");
 
 const onconfirm = async () => {
   const res = await borrowBook({ bookId: borrowId.value });
   if (res.code == "0") {
     getBook(currentPage.value);
-    ElMessage.success("借阅成功");
+    ElMessage.success("购买成功");
     show.value = false;
   } else {
     ElMessage.error(res.data);

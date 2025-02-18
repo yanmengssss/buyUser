@@ -1,6 +1,6 @@
 <template>
   <van-nav-bar
-    title="借阅历史"
+    title="购买历史"
     style="background-color: rgba(0, 0, 0, 0.1)"
     left-arrow
     @click-left="onClickLeft"
@@ -19,7 +19,7 @@
   <Dialogs :show="show" :title="'提醒'" :confirm="onconfirm" :cancel="onclose">
     <template #default>
       <div style="width: 100%; text-align: center">
-        是否确定归还{{ borrowName }}？
+        是否确定录入{{ borrowName }}？
       </div>
     </template>
   </Dialogs>
@@ -83,7 +83,7 @@ const getHistory = async (page) => {
     historyList.value.push({
       id: item.bookId,
       rentId: item.rentId,
-      name: item.bookName || "暂无书名",
+      name: item.bookName || "暂无",
       borrowTime: dayjs(item.createTime).format("YYYY-MM-DD") || "",
       returnTime: dayjs(item.anticipate).format("YYYY-MM-DD") || "",
       status: item.status == 1 ? 1 : isTodayOrAfter(item.anticipate) ? 0 : 2,

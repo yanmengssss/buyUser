@@ -18,16 +18,16 @@
           </div></template
         >
         <el-descriptions direction="vertical" :column="1" size="small" border>
-          <el-descriptions-item label="书籍ID"
+          <el-descriptions-item label="商品ID"
             >{{ props.bookId }}
           </el-descriptions-item>
           <el-descriptions-item label="租借ID"
             >{{ props.rentId }}
           </el-descriptions-item>
-          <el-descriptions-item label="借出时间"
+          <el-descriptions-item label="购买时间"
             >{{ props.borrowTime }}
           </el-descriptions-item>
-          <el-descriptions-item label="预计归还时间"
+          <el-descriptions-item label="预计时间"
             >{{ props.returnTime }}
           </el-descriptions-item>
         </el-descriptions>
@@ -39,7 +39,7 @@
           type="primary"
           size="small"
           style="margin-top: 10px; float: right; margin-right: 10px"
-          >借阅</el-button
+          >购买</el-button
         >
       </el-collapse-item>
     </el-collapse>
