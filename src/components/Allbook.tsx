@@ -38,7 +38,7 @@ const Allbook = () => {
     if (chartRef.current && val.length > 0) {
       const option = {
         title: {
-          text: "藏书总量",
+          text: "库存总量",
           left: "center",
         },
         tooltip: {

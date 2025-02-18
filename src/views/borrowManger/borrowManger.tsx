@@ -25,19 +25,19 @@ type chooseType = "" | "id" | "name" | "user" | "status";
 
 const chooseData = [
   { value: "id", label: "ID" },
-  { value: "name", label: "书名" },
-  { value: "user", label: "用户" },
+  { value: "name", label: "食品安全码" },
+  { value: "user", label: "商品类别" },
   { value: "status", label: "状态" },
 ];
 
 const chooseStatus = [
   {
     value: "0",
-    label: "已归还",
+    label: "已售出",
   },
   {
     value: "1",
-    label: "未归还",
+    label: "有库存",
   },
   {
     value: "2",
@@ -46,8 +46,8 @@ const chooseStatus = [
 ];
 
 const colorMap = {
-  0: { label: "已归还", color: "green" },
-  1: { label: "未归还", color: "blue" },
+  0: { label: "已售出", color: "green" },
+  1: { label: "有库存", color: "blue" },
   2: { label: "已超时", color: "red" },
 };
 
@@ -163,13 +163,13 @@ const BookManger: React.FC = () => {
       key: "id",
     },
     {
-      title: "书名",
+      title: "食品安全码",
       dataIndex: "bookname",
       align: "center",
       key: "bookname",
     },
     {
-      title: "书籍ID",
+      title: "商品名称",
       dataIndex: "bookId",
       align: "center",
       key: "bookId",
@@ -181,7 +181,7 @@ const BookManger: React.FC = () => {
       key: "borrowTime",
     },
     {
-      title: "用户",
+      title: "商品类别",
       dataIndex: "user",
       align: "center",
       key: "user",
@@ -198,7 +198,7 @@ const BookManger: React.FC = () => {
       ),
     },
     {
-      title: "预计归还日期",
+      title: "商品价值",
       dataIndex: "predictedBackTime",
       align: "center",
       key: "predictedBackTime",
@@ -290,15 +290,15 @@ const BookManger: React.FC = () => {
         </div>
 
         <div>
-          <h5>用户ID</h5>
+          <h5>商品类别ID</h5>
           <p>{drawerState.userId}</p>
         </div>
         <div>
-          <h5>书籍ID</h5>
+          <h5>商品名称</h5>
           <p>{drawerState.bookId}</p>
         </div>
         <div>
-          <h5>书名</h5>
+          <h5>食品安全码</h5>
           <p>{drawerState.bookName}</p>
         </div>
         <div>
@@ -324,7 +324,7 @@ const BookManger: React.FC = () => {
           )}
         </div>
         <div>
-          <h5>预计归还日期</h5>
+          <h5>商品价值</h5>
           <p>{drawerState.predictedBackTime}</p>
         </div>
         <div

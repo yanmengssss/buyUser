@@ -55,7 +55,7 @@ const Login: React.FC = () => {
   return (
     <div className="bg">
       <div className="all">
-        <h1 className="title">欢迎登录图书管理平台</h1>
+        <h1 className="title">欢迎登录商品销售管理系统图书管理平台</h1>
         <Card className="card">
           <Form name="basic" autoComplete="off">
             <Form.Item label="账号" name="username">

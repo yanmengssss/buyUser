@@ -19,7 +19,7 @@ const AllBeborred = () => {
     const myChart = echarts.init(chartDom.current);
     const option: EChartsOption = {
       title: {
-        text: "近两周单日借出书籍总量",
+        text: "近两周单日销售总额",
         left: "center",
       },
       tooltip: {

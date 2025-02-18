@@ -30,14 +30,14 @@ function getItem(
 const items: MenuItem[] = [
   getItem("数据展示", "/home/ShowEcharts", <AreaChartOutlined />),
   getItem("人员管理", "/home/PersonManger", <TeamOutlined />),
-  getItem("书籍管理", "/home/bookManger", <BookOutlined />),
-  getItem("借阅管理", "/home/borrowManger", <PicCenterOutlined />),
+  getItem("库存管理", "/home/bookManger", <BookOutlined />),
+  getItem("销售管理", "/home/borrowManger", <PicCenterOutlined />),
 ];
 const keyMap = {
   "/home/ShowEcharts": "数据展示",
   "/home/PersonManger": "人员管理",
-  "/home/bookManger": "书籍管理",
-  "/home/borrowManger": "借阅管理",
+  "/home/bookManger": "库存管理",
+  "/home/borrowManger": "销售管理",
 };
 const LayoutPage: React.FC = () => {
   const Navigate = useNavigate();

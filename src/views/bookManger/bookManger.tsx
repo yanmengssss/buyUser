@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 interface DataType {
   id: string;
   name: string;
-  ISBN: string;
+  Food: string;
   place: string;
   public: string;
   type: string;
@@ -27,38 +27,38 @@ type chooseType =
   | ""
   | "id"
   | "name"
-  | "ISBN"
+  | "Food"
   | "place"
   | "public"
   | "type"
   | "status";
 const chooseData = [
   { value: "id", label: "ID" },
-  { value: "name", label: "书名" },
-  { value: "ISBN", label: "ISBN" },
+  { value: "name", label: "名称" },
+  { value: "Food", label: "食品安全码" },
   { value: "hot", label: "权重" },
   { value: "place", label: "位置" },
-  { value: "public", label: "出版社" },
+  { value: "public", label: "出品公司" },
   { value: "type", label: "类型" },
   { value: "status", label: "状态" },
 ];
 const chooseBookType = [
-  { value: "literature_art", label: "文学与艺术" },
-  { value: "history_geography", label: "历史与地理" },
-  { value: "social_sciences", label: "社会科学" },
-  { value: "natural_sciences", label: "自然科学" },
-  { value: "technology_engineering", label: "技术与工程" },
-  { value: "life_health", label: "生活与健康" },
-  { value: "management_business", label: "管理与商业" },
+  { value: "literature_art", label: "零食饮料" },
+  { value: "history_geography", label: "冷藏食品" },
+  { value: "social_sciences", label: "速食热餐" },
+  { value: "natural_sciences", label: "日用品" },
+  { value: "technology_engineering", label: "烟酒类" },
+  { value: "life_health", label: "报刊杂志" },
+  { value: "management_business", label: "宠物食品" },
 ];
 const chooseStatus = [
   {
     value: "0",
-    label: "在馆",
+    label: "有库存",
   },
   {
     value: "1",
-    label: "已借出",
+    label: "已售出",
   },
   {
     value: "2",
@@ -75,16 +75,16 @@ const bookTypeList = [
   "management_business",
 ];
 const colorMap = {
-  0: { label: "在馆", color: "green" },
-  1: { label: "已借出", color: "blue" },
+  0: { label: "有库存", color: "green" },
+  1: { label: "已售出", color: "blue" },
   2: { label: "已转出", color: "red" },
-  literature_art: { label: "文学与艺术", color: "green" },
-  history_geography: { label: "历史与地理", color: "blue" },
-  social_sciences: { label: "社会科学", color: "red" },
-  natural_sciences: { label: "自然科学", color: "orange" },
-  technology_engineering: { label: "技术与工程", color: "purple" },
-  life_health: { label: "生活与健康", color: "cyan" },
-  management_business: { label: "管理与商业", color: "magenta" },
+  literature_art: { label: "零食饮料", color: "green" },
+  history_geography: { label: "冷藏食品", color: "blue" },
+  social_sciences: { label: "速食热餐", color: "red" },
+  natural_sciences: { label: "日用品", color: "orange" },
+  technology_engineering: { label: "烟酒类", color: "purple" },
+  life_health: { label: "报刊杂志", color: "cyan" },
+  management_business: { label: "宠物食品", color: "magenta" },
 };
 const BookManger: React.FC = () => {
   const [ChooseType, setChooseType] = useState<chooseType>("");
@@ -109,19 +109,19 @@ const BookManger: React.FC = () => {
       key: "id",
     },
     {
-      title: "书名",
+      title: "名称",
       dataIndex: "name",
       align: "center",
       key: "name",
     },
     {
-      title: "ISBN",
-      dataIndex: "ISBN",
+      title: "食品安全码",
+      dataIndex: "Food",
       align: "center",
-      key: "ISBN",
+      key: "Food",
     },
     {
-      title: "出版社",
+      title: "出品公司",
       dataIndex: "public",
       align: "center",
       key: "public",
@@ -195,7 +195,7 @@ const BookManger: React.FC = () => {
     const data = {
       book: {
         bookName: drawerState.name,
-        isbn: drawerState.ISBN,
+        Food: drawerState.Food,
         publish: drawerState.public,
         loaction: drawerState.place,
         type: bookTypeList.findIndex((it) => it == drawerState.type)
@@ -221,7 +221,7 @@ const BookManger: React.FC = () => {
       data.push({
         id: item.bookId,
         name: item.bookName,
-        ISBN: item.isbn,
+        Food: item.Food,
         public: item.publish,
         inTime: dayjs(item.createTime).format("YYYY-MM-DD"),
         place: item.loaction,
@@ -253,7 +253,7 @@ const BookManger: React.FC = () => {
       data.push({
         id: item.bookId,
         name: item.bookName,
-        ISBN: item.isbn,
+        Food: item.Food,
         public: item.publish,
         inTime: dayjs(item.createTime).format("YYYY-MM-DD"),
         place: item.loaction,
@@ -350,11 +350,11 @@ const BookManger: React.FC = () => {
           )}
         </div>
         <div>
-          <h5>ISBN</h5>
-          <p>{drawerState.ISBN}</p>
+          <h5>Food</h5>
+          <p>{drawerState.Food}</p>
         </div>
         <div>
-          <h5>出版社</h5>
+          <h5>出品公司</h5>
           <p>{drawerState.publiC}</p>
         </div>
         <div>

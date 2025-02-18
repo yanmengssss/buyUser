@@ -19,7 +19,7 @@ const BookBeborredType = () => {
     const myChart = echarts.init(chartDom.current);
     const option: EChartsOption = {
       title: {
-        text: "近两周借出书籍类型",
+        text: "近两周销售商品类别",
         left: "center",
       },
       tooltip: {
