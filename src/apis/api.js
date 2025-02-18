@@ -1,4 +1,5 @@
 import { request } from "@/utils/util.js";
+
 export const register = (data) => {
   return request({
     url: "/user/registry",
@@ -50,8 +51,15 @@ export const returnBook = (data) => {
   });
 };
 export const getBookDetail = (ISBN) => {
+  let data = {
+    isbn: ISBN,
+  };
   return request({
-    url: `http://e7f60b4.r20.cpolar.top`,
+    url: `/book/getByISBN`,
+    params: data,
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
   });
 };
 export const addBook = (data) => {

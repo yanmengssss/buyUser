@@ -10,7 +10,7 @@
           <el-descriptions-item label="商品名称">{{
             props.title
           }}</el-descriptions-item>
-          <el-descriptions-item label="品牌">{{
+          <el-descriptions-item label="日期">{{
             props.publish
           }}</el-descriptions-item>
           <el-descriptions-item label="出版商">{{

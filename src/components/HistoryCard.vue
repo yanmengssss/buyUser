@@ -12,26 +12,26 @@
             "
           >
             <span style="display: inline-block">{{ props.name }}</span>
-            <el-tag type="primary" v-if="props.status == 1">已归还</el-tag>
+            <!-- <el-tag type="primary" v-if="props.status == 1">已归还</el-tag>
             <el-tag type="warning" v-else-if="props.status == 0">未归还</el-tag>
-            <el-tag type="error" v-else>已逾期</el-tag>
+            <el-tag type="error" v-else>已逾期</el-tag> -->
           </div></template
         >
         <el-descriptions direction="vertical" :column="1" size="small" border>
           <el-descriptions-item label="商品ID"
             >{{ props.bookId }}
           </el-descriptions-item>
-          <el-descriptions-item label="租借ID"
+          <!-- <el-descriptions-item label="租借ID"
             >{{ props.rentId }}
-          </el-descriptions-item>
+          </el-descriptions-item> -->
           <el-descriptions-item label="购买时间"
             >{{ props.borrowTime }}
           </el-descriptions-item>
-          <el-descriptions-item label="预计时间"
+          <!-- <el-descriptions-item label="预计时间"
             >{{ props.returnTime }}
-          </el-descriptions-item>
+          </el-descriptions-item> -->
         </el-descriptions>
-        <el-button
+        <!-- <el-button
           v-if="props.status != 1"
           @click="
             emit('onReturn', { bookId: props.bookId, rentId: props.rentId })
@@ -40,7 +40,7 @@
           size="small"
           style="margin-top: 10px; float: right; margin-right: 10px"
           >购买</el-button
-        >
+        > -->
       </el-collapse-item>
     </el-collapse>
   </el-card>
