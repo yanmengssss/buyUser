@@ -177,7 +177,7 @@ watch(
         if (res.code == 100) {
           ElMessage.error("查无此物");
         } else {
-          inputState.bookName = res.detail.name;
+          // inputState.bookName = res.detail.name;
           inputState.publish = res.detail.publisher;
           inputState.author = res.detail.author;
           inputState.isbn = res.detail.isbn;
