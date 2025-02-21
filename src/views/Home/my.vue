@@ -173,7 +173,7 @@ watch(
     if (commonStore.getType() == "back") {
       ElMessage.success("购买" + newVal);
     } else if (commonStore.getType() == "add") {
-      getBookDetail("978-3-16-148410-0").then((res) => {
+      getBookDetail(newVal).then((res) => {
         if (res.code == 100) {
           ElMessage.error("查无此物");
         } else {
