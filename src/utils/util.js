@@ -1,6 +1,6 @@
 //utils.js
 import axios from "axios";
-axios.defaults.baseURL = "http://e7f60b4.r20.cpolar.top";
+axios.defaults.baseURL = "http://4e4e747a.r11.cpolar.top";
 const axiosInstance = axios.create({
   timeout: 5 * 1000, // 请求超时时间（5秒）
   retry: 0, //全局重试次数
