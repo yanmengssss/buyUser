@@ -86,7 +86,7 @@ const getHistory = async (page) => {
       name: item.bookName || "暂无",
       borrowTime: dayjs(item.createTime).format("YYYY-MM-DD") || "",
       returnTime: dayjs(item.anticipate).format("YYYY-MM-DD") || "",
-      status: item.status == 1 ? 1 : isTodayOrAfter(item.anticipate) ? 0 : 2,
+      // status: item.status == 1 ? 1 : isTodayOrAfter(item.anticipate) ? 0 : 2,
     });
   });
   console.log(res);
