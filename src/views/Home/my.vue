@@ -169,28 +169,28 @@ const changeVal = (val, e) => {
 watch(
   [() => bookstore.getbookIBSN],
   ([newVal]) => {
-    if (newVal != "") {
-      if (commonStore.getType() == "back") {
-        ElMessage.success("购买" + newVal);
-      } else if (commonStore.getType() == "add") {
-        getBookDetail(newVal).then((res) => {
-          if (!res.code || res.code == 100) {
-            ElMessage.error("查无此物");
-          } else {
-            // inputState.bookName = res.detail.name;
-            inputState.publish = res.detail.publisher;
-            inputState.author = res.detail.author;
-            inputState.isbn = res.detail.isbn;
-            inputState.introduce = res.detail.introduce;
+    // if (newVal != "") {
+    if (commonStore.getType() == "back") {
+      ElMessage.success("购买" + newVal);
+    } else if (commonStore.getType() == "add") {
+      getBookDetail(newVal).then((res) => {
+        if (res.code == 100) {
+          ElMessage.error("查无此物");
+        } else {
+          // inputState.bookName = res.detail.name;
+          inputState.publish = res.detail.publisher;
+          inputState.author = res.detail.author;
+          inputState.isbn = res.detail.isbn;
+          inputState.introduce = res.detail.introduce;
 
-            show.value = true;
-          }
-        });
-        // 在这里可以处理getBookDetail的返回值res
-      }
-      // 重置状态
-      bookstore.setbookIBSN(""); // 清空bookstore中的bookIBSN
+          show.value = true;
+        }
+      });
+      // 在这里可以处理getBookDetail的返回值res
     }
+    // 重置状态
+    bookstore.setbookIBSN(""); // 清空bookstore中的bookIBSN
+    // }
   },
   {
     immediate: true,
