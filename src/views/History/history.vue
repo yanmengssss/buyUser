@@ -68,7 +68,7 @@ function isTodayOrAfter(date) {
   const inputDate = dayjs(date).startOf("day");
 
   // 判断日期是否是今天或之后
-  return inputDate.isSameOrAfter(today, "day");
+  return inputDate.isTodayOrAfter(today, "day");
 }
 
 const getHistory = async (page) => {
